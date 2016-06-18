@@ -4,7 +4,6 @@ import java.util.Stack;
  * Given a 2D binary matrix filled with 0's and 1's,
  * find the largest rectangle containing all ones and return its area.
  */
-
 public class MaximalRectangle {
     public int maximalRectangle(char[][] matrix) {
         if (matrix == null || matrix.length == 0) {
@@ -17,7 +16,7 @@ public class MaximalRectangle {
             // The heights of each column from current row's point of view
             for (int j = 0; j < matrix[0].length; j++) {
                 if (matrix[i][j] == '1') {
-                    heights[j] = heights[j] + 1;
+                    heights[j]++;
                 } else {
                     heights[j] = 0;
                 }
