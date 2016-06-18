@@ -11,21 +11,21 @@ public class MaximalRectangle {
             return 0;
         }
 
-        // The heights of each column from each row's point of view
-        int[][] heights = new int[matrix.length][matrix[0].length + 1];
+        int max = 0;
+        int[] heights = new int[matrix[0].length + 1];
         for (int i = 0; i < matrix.length; i++) {
+            // The heights of each column from current row's point of view
             for (int j = 0; j < matrix[0].length; j++) {
                 if (matrix[i][j] == '1') {
-                    heights[i][j] = (i == 0) ? 1 : heights[i - 1][j] + 1;
+                    heights[j] = heights[j] + 1;
+                } else {
+                    heights[j] = 0;
                 }
             }
-        }
 
-        // Get the maximal rectangle that can be obtained from each row's
-        // point of view, and then pick the maximal one
-        int max = 0;
-        for (int i = 0; i < heights.length; i++) {
-            max = Math.max(max, getRowMax(heights[i]));
+            // Get the maximal rectangle that can be obtained from current row's
+            // point of view, and then pick the maximal one
+            max = Math.max(max, getRowMax(heights));
         }
 
         return max;
@@ -33,7 +33,7 @@ public class MaximalRectangle {
 
     /**
      * Traditional maximal rectangle in histogram problem.
-     * 
+     *
      * @param heights
      * @return
      */
