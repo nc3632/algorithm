@@ -28,39 +28,42 @@ interface NestedInteger {
 }
 
 public class NestedIterator implements Iterator<Integer> {
-    private Stack<ListIterator<NestedInteger>> stack;
-    private boolean checked;
+    private Stack<Iterator<NestedInteger>> stack;
+    private NestedInteger nextInt;
 
     public NestedIterator(List<NestedInteger> nestedList) {
         stack = new Stack<>();
-        stack.push(nestedList.listIterator());
+        stack.push(nestedList.iterator());
     }
 
     @Override
     public Integer next() {
-        if (checked) {
-            checked = false;
-            return stack.peek().next().getInteger();
-        } else {
-            return hasNext() ? stack.peek().next().getInteger() : null;
+        if (nextInt == null && !hasNext()) {
+            return null;
         }
+
+        Integer ret = nextInt.getInteger();
+        nextInt = null;
+
+        return ret;
     }
 
     @Override
     public boolean hasNext() {
-        checked = true;
+        if (nextInt != null) {
+            return true;
+        }
 
         while (!stack.isEmpty()) {
-            ListIterator<NestedInteger> iterator = stack.peek();
+            Iterator<NestedInteger> iterator = stack.peek();
             if (!iterator.hasNext()) {
                 stack.pop();
             } else {
-                NestedInteger nextInt = iterator.next();
+                nextInt = iterator.next();
                 if (nextInt.isInteger()) {
-                    iterator.previous();
                     return true;
                 } else {
-                    stack.push(nextInt.getList().listIterator());
+                    stack.push(nextInt.getList().iterator());
                 }
             }
         }
