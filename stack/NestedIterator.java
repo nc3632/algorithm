@@ -1,6 +1,5 @@
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Stack;
 
 /**
@@ -38,7 +37,7 @@ public class NestedIterator implements Iterator<Integer> {
 
     @Override
     public Integer next() {
-        if (nextInt == null && !hasNext()) {
+        if (!hasNext()) {
             return null;
         }
 
