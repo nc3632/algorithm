@@ -28,14 +28,14 @@ public class LongestPalindromeSubstring {
                 end++;
             }
 
-            if (max < end - start + 1) {
-                max = end - start + 1;
+            if (max < end - start - 1) {
+                max = end - start - 1;
                 maxStart = start + 1;
-                maxEnd = end - 1;
+                maxEnd = end;
             }
         }
 
-        return s.substring(maxStart, maxEnd + 1);
+        return s.substring(maxStart, maxEnd);
     }
 
     public static void main(String[] args) {
