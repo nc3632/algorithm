@@ -11,16 +11,15 @@ import java.util.List;
 public class RestoreIpAddress {
     public List<String> restoreIpAddresses(String s) {
         List<String> result = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
-        restoreIpAddresses(s, 1, 0, result, sb);
+        restoreIpAddresses(s, 1, 0, result, new ArrayList<>());
 
         return result;
     }
 
-    private void restoreIpAddresses(String s, int segment, int startPos, List<String> result, StringBuilder sb) {
+    private void restoreIpAddresses(String s, int segment, int startPos, List<String> result, List<String> candidates) {
         if (segment == 5) {
             if (startPos >= s.length()) {
-                result.add(sb.substring(0, sb.length() - 1));
+                result.add(String.join(".", candidates));
             }
             return;
         }
@@ -32,9 +31,9 @@ public class RestoreIpAddress {
                 break;
             }
 
-            sb.append(candidate + ".");
-            restoreIpAddresses(s, segment + 1, endPos, result, sb);
-            sb.delete(sb.length() - endPos + startPos - 1, sb.length());
+            candidates.add(candidate);
+            restoreIpAddresses(s, segment + 1, endPos, result, candidates);
+            candidates.remove(candidates.size() - 1);
         }
     }
 }
