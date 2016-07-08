@@ -5,7 +5,7 @@
 public class Pow {
     public double myPow(double x, int n) {
         // To avoid overflow
-        long m = (long) ((n >= 0) ? n : -n);
+        long m = Math.abs((long) n);
         double result = 1;
         while (m > 0) {
             // Using 7 (i.e., 111) as an example
