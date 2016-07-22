@@ -30,4 +30,21 @@ public class DistinctSubsequence {
 
         return dp[dp.length - 1][dp[0].length - 1];
     }
+
+    public int numDistinctSpaceOptimization(String s, String t) {
+        int[] dp = new int[t.length() + 1];
+        dp[0] = 1;
+        for (int i = 0; i < s.length(); i++) {
+            int prevVal = dp[0];
+            for (int j = 1; j < dp.length; j++) {
+                int currVal = dp[j];
+                if (s.charAt(i) == t.charAt(j - 1)) {
+                    dp[j] += prevVal;
+                }
+                prevVal = currVal;
+            }
+        }
+
+        return dp[dp.length - 1];
+    }
 }
