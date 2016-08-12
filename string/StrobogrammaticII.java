@@ -42,13 +42,49 @@ public class StrobogrammaticII {
         }
     }
 
+    public List<String> findStrobogrammaticNonRecursive(int n) {
+        if (n == 0) {
+            return new ArrayList<>();
+        }
+
+        List<String> result;
+        if ((n & 1) == 1) {
+            result = Arrays.asList("0", "1", "8");
+        } else {
+            result = Arrays.asList("");
+        }
+
+        for (int i = 0; i < n / 2; i++) {
+            List<String> temp = result;
+            result = new ArrayList<>();
+
+            for (String s: temp) {
+                result.add("1" + s + "1");
+                result.add("6" + s + "9");
+                result.add("8" + s + "8");
+                result.add("9" + s + "6");
+
+                if (i != n / 2 - 1) {
+                    result.add("0" + s + "0");
+                }
+            }
+        }
+
+        return result;
+    }
+
     public static void main(String[] args) {
         StrobogrammaticII sol = new StrobogrammaticII();
 
         System.out.println(sol.findStrobogrammatic(0));
+        System.out.println(sol.findStrobogrammaticNonRecursive(0));
         System.out.println(sol.findStrobogrammatic(1));
+        System.out.println(sol.findStrobogrammaticNonRecursive(1));
         System.out.println(sol.findStrobogrammatic(2));
+        System.out.println(sol.findStrobogrammaticNonRecursive(2));
         System.out.println(sol.findStrobogrammatic(3));
+        System.out.println(sol.findStrobogrammaticNonRecursive(3));
         System.out.println(sol.findStrobogrammatic(4));
+        System.out.println(sol.findStrobogrammaticNonRecursive(4));
     }
 }
