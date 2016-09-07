@@ -41,7 +41,7 @@ public class Permutations {
 
                 helper(nums, used, candidate, result);
 
-                candidate.remove(Integer.valueOf(nums[i]));
+                candidate.remove(candidate.size() - 1);
                 used[i] = false;
             }
         }
