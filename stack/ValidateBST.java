@@ -31,6 +31,18 @@ public class ValidateBST {
         }
     }
 
+    private class Result {
+        boolean isValid;
+        long max;
+        long min;
+
+        Result(boolean isValid, long max, long min) {
+            this.isValid = isValid;
+            this.max = max;
+            this.min = min;
+        }
+    }
+
     public boolean isValidBST(TreeNode root) {
         Stack<TreeNode> stack = new Stack<>();
         TreeNode currNode = root, prevNode = null;
@@ -53,17 +65,37 @@ public class ValidateBST {
         return true;
     }
 
+    public boolean isValidBSTRecursive(TreeNode root) {
+        return helper(root).isValid;
+    }
+
+    private Result helper(TreeNode root) {
+        if (root == null) {
+            return new Result(true, Long.MIN_VALUE, Long.MAX_VALUE);
+        }
+
+        Result result1 = helper(root.left);
+        Result result2 = helper(root.right);
+
+        if (result1.isValid && result2.isValid && result1.max < root.val && result2.min > root.val) {
+            return new Result(true, result2.max == Long.MIN_VALUE ? root.val : result2.max,
+                    result1.min == Long.MAX_VALUE ? root.val : result1.min);
+        } else {
+            return new Result(false, Long.MIN_VALUE, Long.MIN_VALUE);
+        }
+    }
+
     public static void main(String[] args) {
         ValidateBST sol = new ValidateBST();
 
         TreeNode root = new TreeNode(2);
         root.left = new TreeNode(1);
         root.right = new TreeNode(3);
-        System.out.println(sol.isValidBST(root));
+        System.out.println(sol.isValidBSTRecursive(root));
 
         root = new TreeNode(1);
         root.left = new TreeNode(2);
         root.right = new TreeNode(3);
-        System.out.println(sol.isValidBST(root));
+        System.out.println(sol.isValidBSTRecursive(root));
     }
 }
