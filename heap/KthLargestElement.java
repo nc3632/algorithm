@@ -14,25 +14,24 @@ import java.util.PriorityQueue;
 
 public class KthLargestElement {
     public int findKthLargest(int[] nums, int k) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>(new Comparator() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                Integer n1 = (Integer) o1;
-                Integer n2 = (Integer) o2;
-                return n2.compareTo(n1);
+        // Use size k min-heap. The top one would the kth largest.
+        // Keep checking each number, if the number is less than top, then drop it.
+        // Otherwise, pop the top out and then push the new number in.
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+
+        // O(nlog(k))
+        for(int i = 0; i < nums.length; i++) {
+            if (pq.size() < k) {
+                pq.offer(nums[i]);
+            } else {
+                if (nums[i] > pq.peek()) {
+                    pq.poll();
+                    pq.offer(nums[i]);
+                }
             }
-        });
-
-        for(int n : nums) {
-            pq.offer(n);
         }
 
-        int result = 0;
-        for (int i = 0; i < k; i++) {
-            result = pq.poll();
-        }
-
-        return result;
+        return pq.peek();
     }
 
     public static void main(String[] args) {
