@@ -61,8 +61,4 @@ public class CourseSchedule {
         return finished == numCourses;
     }
 
-    public static void main(String[] args) {
-        CourseSchedule sol = new CourseSchedule();
-        System.out.println(sol.canFinish(3, new int[][] {{2, 0}, {2, 1}}));
-    }
 }
