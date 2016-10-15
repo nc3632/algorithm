@@ -47,28 +47,34 @@ public class LargestBstSubTree {
     private static class Result {
         boolean isBST;
         int largestSize;
+        int lowerBound;
+        int upperBound;
 
-        Result(boolean isBST, int largestSize) {
+        Result(boolean isBST, int largestSize, int lowerBound, int upperBound) {
             this.isBST = isBST;
             this.largestSize = largestSize;
+            this.lowerBound = lowerBound;
+            this.upperBound = upperBound;
         }
     }
 
     public Result largestBST(TreeNode node) {
         if (node == null) {
-            return new Result(true, 0);
+            return new Result(true, 0, Integer.MAX_VALUE, Integer.MIN_VALUE);
         }
 
         Result resultFromLeft = largestBST(node.left);
         Result resultFromRight = largestBST(node.right);
 
         if (resultFromLeft.isBST && resultFromRight.isBST
-                && (node.left == null || node.left != null && node.left.val < node.val)
-                && (node.right == null || node.right != null && node.val < node.right.val)) {
+                && resultFromLeft.upperBound < node.val && node.val < resultFromRight.lowerBound) {
 
-            return new Result(true, resultFromLeft.largestSize + resultFromRight.largestSize + 1);
+            return new Result(true, resultFromLeft.largestSize + resultFromRight.largestSize + 1,
+                    resultFromLeft.largestSize == 0 ? node.val : resultFromLeft.lowerBound,
+                    resultFromRight.largestSize == 0 ? node.val : resultFromRight.upperBound);
         } else {
-            return new Result(false, Math.max(resultFromLeft.largestSize, resultFromRight.largestSize));
+            return new Result(false, Math.max(resultFromLeft.largestSize, resultFromRight.largestSize),
+                    Integer.MAX_VALUE, Integer.MIN_VALUE);
         }
     }
 
