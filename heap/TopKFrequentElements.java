@@ -18,22 +18,22 @@ import java.util.PriorityQueue;
 
 public class TopKFrequentElements {
     public List<Integer> topKFrequent(int[] nums, int k) {
+        // O(n)
         HashMap<Integer, Integer> map = new HashMap<>();
         for (int n : nums) {
-            map.put(n, map.containsKey(n) ? map.get(n) + 1 : 1);
+            map.put(n, map.getOrDefault(n, 0) + 1);
         }
 
-        PriorityQueue<Map.Entry<Integer, Integer>> priorityQueue = new PriorityQueue<>(new Comparator() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                Integer val1 = ((Map.Entry<Integer, Integer>) o1).getValue();
-                Integer val2 = ((Map.Entry<Integer, Integer>) o2).getValue();
-                return val2.compareTo(val1);
-            }
-        });
+        PriorityQueue<Map.Entry<Integer, Integer>> priorityQueue = new PriorityQueue<>(
+                (Map.Entry<Integer, Integer> e1, Map.Entry<Integer, Integer> e2) -> e1.getValue().compareTo(e2.getValue())
+        );
 
+        // O(nlogk)
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
             priorityQueue.offer(entry);
+            if (priorityQueue.size() > k) {
+                priorityQueue.poll();
+            }
         }
 
         List<Integer> result = new ArrayList<>(k);
