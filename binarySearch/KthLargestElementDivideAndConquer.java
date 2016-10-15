@@ -12,6 +12,7 @@ import java.util.Random;
  */
 
 public class KthLargestElementDivideAndConquer {
+    // O(n)
     public int findKthLargest(int[] nums, int k) {
         int start = 0, end = nums.length - 1;
         Random random = new Random();
