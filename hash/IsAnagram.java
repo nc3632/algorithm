@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,6 +59,24 @@ public class IsAnagram {
         return true;
     }
 
+    public boolean isAnagramEvenFaster(String s, String t) {
+        char[] mapS = buildMap(s);
+        char[] mapT = buildMap(t);
+
+        return new String(mapS).equals(new String(mapT));
+    }
+
+    private char[] buildMap(String s) {
+        char[] map = new char[26];
+        Arrays.fill(map, '0');
+
+        for (int i = 0; i < s.length(); i++) {
+            map[s.charAt(i) - 'a']++;
+        }
+
+        return map;
+    }
+
     public static void main(String[] args) {
         IsAnagram sol = new IsAnagram();
         System.out.println(sol.isAnagram("anagram", "nagaram"));
@@ -65,5 +84,8 @@ public class IsAnagram {
 
         System.out.println(sol.isAnagramFaster("anagram", "nagaram"));
         System.out.println(sol.isAnagramFaster("rat", "car"));
+
+        System.out.println(sol.isAnagramEvenFaster("anagram", "nagaram"));
+        System.out.println(sol.isAnagramEvenFaster("rat", "car"));
     }
 }

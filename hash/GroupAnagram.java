@@ -23,17 +23,26 @@ public class GroupAnagram {
 
         Map<String, List<String>> map = new HashMap<>();
         for (String s : strs) {
-            char[] arr = s.toCharArray();
-            Arrays.sort(arr);
-            String sorted = new String(arr);
+            String tag = buildTag(s);
 
-            if (!map.containsKey(sorted)) {
-                map.put(sorted, new LinkedList<>());
+            if (!map.containsKey(tag)) {
+                map.put(tag, new LinkedList<>());
             }
-            map.get(sorted).add(s);
+            map.get(tag).add(s);
         }
 
         return new LinkedList<>(map.values());
+    }
+
+    private String buildTag(String s) {
+        char[] map = new char[26];
+        Arrays.fill(map, '0');
+
+        for (int i = 0; i < s.length(); i++) {
+            map[s.charAt(i) - 'a']++;
+        }
+
+        return String.valueOf(map);
     }
 
     public static void main(String[] args) {
