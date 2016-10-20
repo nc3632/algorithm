@@ -40,9 +40,30 @@ public class IsAnagram {
         return true;
     }
 
+    public boolean isAnagramFaster(String s, String t) {
+        int[] map = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            map[s.charAt(i) - 'a']++;
+        }
+
+        for (int i = 0; i < t.length(); i++) {
+            map[t.charAt(i) - 'a']--;
+        }
+
+        for (int i = 0; i < map.length; i++) {
+            if (map[i] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         IsAnagram sol = new IsAnagram();
         System.out.println(sol.isAnagram("anagram", "nagaram"));
         System.out.println(sol.isAnagram("rat", "car"));
+
+        System.out.println(sol.isAnagramFaster("anagram", "nagaram"));
+        System.out.println(sol.isAnagramFaster("rat", "car"));
     }
 }
