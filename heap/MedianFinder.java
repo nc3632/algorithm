@@ -20,14 +20,7 @@ public class MedianFinder {
     PriorityQueue<Integer> heap2;
 
     public MedianFinder() {
-        Comparator<Integer> myComparotor = new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o2.compareTo(o1);
-            }
-        };
-
-        heap1 = new PriorityQueue<>(myComparotor);
+        heap1 = new PriorityQueue<>((Integer i1, Integer i2) -> i2.compareTo(i1));
         heap2 = new PriorityQueue<>();
     }
 
