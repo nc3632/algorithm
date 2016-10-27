@@ -29,23 +29,24 @@ public class BinaryTreePaths {
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> paths = new ArrayList<>();
         if (root != null) {
-            helper(root, "", paths);
+            helper(root, new ArrayList<>(), paths);
         }
         return paths;
     }
 
-    private void helper(TreeNode root, String path, List<String> paths) {
-        path += root.val;
+    private void helper(TreeNode root, List<String> path, List<String> paths) {
+        path.add(String.valueOf(root.val));
 
         if (root.left == null && root.right == null) {
-            paths.add(path);
+            paths.add(String.join("->", path));
         } else {
             if (root.left != null) {
-                helper(root.left, path + "->", paths);
+                helper(root.left, path, paths);
             }
             if (root.right != null) {
-                helper(root.right, path + "->", paths);
+                helper(root.right, path, paths);
             }
         }
+        path.remove(path.size() - 1);
     }
 }
